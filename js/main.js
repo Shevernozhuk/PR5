@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const authButton = document.querySelector(".button-auth");
     const outButton = document.querySelector(".button-out");
     const modalAuth = document.querySelector(".modal-auth");
+    const modalDialogAuth = document.querySelector(".modal-dialog-auth");
     const closeAuthButton = document.querySelector(".close-auth");
     const logInForm = document.getElementById("logInForm");
     const loginInput = document.getElementById("login");
@@ -10,10 +11,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     authButton.addEventListener("click", () => {
         modalAuth.style.display = "flex";
+        loginInput.style.borderColor = "";
+        document.body.style.overflow = "hidden";
     });
 
     closeAuthButton.addEventListener("click", () => {
         modalAuth.style.display = "none";
+        document.body.style.overflow = "";
+    });
+
+    modalAuth.addEventListener("click", (event) => {
+        if (!modalDialogAuth.contains(event.target)) {
+            modalAuth.style.display = "none";
+        document.body.style.overflow = "";
+        }
     });
 
     if (localStorage.getItem("login")) {
