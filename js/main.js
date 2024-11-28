@@ -8,6 +8,91 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginInput = document.getElementById("login");
     const passwordInput = document.getElementById("password");
     const userNameSpan = document.querySelector(".user-name");
+    const cardsContainer = document.querySelector(".cards-restaurants");
+
+    const restaurants = [
+        {
+            title: "Піца плюс",
+            image: "img/pizza-plus/preview.jpg",
+            tag: "50 хвилин",
+            rating: 4.5,
+            price: "від 200 ₴",
+            category: "Піца",
+        },
+        {
+            title: "Танукі",
+            image: "img/food-band/preview.jpg",
+            tag: "60 хвилин",
+            rating: 4.8,
+            price: "від 300 ₴",
+            category: "Суші, роли",
+        },
+        {
+            title: "FoodBand",
+            image: "img/tanuki/preview.jpg",
+            tag: "40 хвилин",
+            rating: 4.5,
+            price: "від 150 ₴",
+            category: "Піца",
+        },
+        {
+            title: "Ikigai",
+            image: "img/palki-skalki/preview.jpg",
+            tag: "55 хвилин",
+            rating: 4.5,
+            price: "від 250 ₴",
+            category: "Піцца",
+        },
+        {
+            title: "Пузата хата",
+            image: "img/gusi-lebedi/preview.jpg",
+            tag: "75 хвилин",
+            rating: 4.5,
+            price: "від 300 ₴",
+            category: "Українські страви",
+        },
+        {
+            title: "PizzaBurger",
+            image: "img/pizza-burger/preview.jpg",
+            tag: "45 хвилин",
+            rating: 4.5,
+            price: "від 700 ₴",
+            category: "Піца",
+        },
+    ];
+
+    function renderCards() {
+        cardsContainer.innerHTML = ""; // Очистити контейнер
+        restaurants.forEach((restaurant) => {
+            const card = document.createElement("a");
+            card.classList.add("card", "card-restaurant");
+            card.href = "#";
+            card.innerHTML = `
+                <img src="${restaurant.image}" alt="image" class="card-image" />
+                <div class="card-text">
+                    <div class="card-heading">
+                        <h3 class="card-title">${restaurant.title}</h3>
+                        <span class="card-tag tag">${restaurant.tag}</span>
+                    </div>
+                    <div class="card-info">
+                        <div class="rating">${restaurant.rating}</div>
+                        <div class="price">${restaurant.price}</div>
+                        <div class="category">${restaurant.category}</div>
+                    </div>
+                </div>
+            `;
+            card.addEventListener("click", (event) => {
+                event.preventDefault();
+                if (!localStorage.getItem("login")) {
+                    modalAuth.style.display = "flex";
+                    document.body.style.overflow = "hidden";
+                } else {
+                    window.location.href = "restaurant.html";
+                }
+            });
+            cardsContainer.appendChild(card);
+        });
+    }
 
     authButton.addEventListener("click", () => {
         modalAuth.style.display = "flex";
@@ -23,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
     modalAuth.addEventListener("click", (event) => {
         if (!modalDialogAuth.contains(event.target)) {
             modalAuth.style.display = "none";
-        document.body.style.overflow = "";
+            document.body.style.overflow = "";
         }
     });
 
@@ -41,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem("login", login);
             displayLoggedIn(login);
             modalAuth.style.display = "none";
+            document.body.style.overflow = "";
         } else {
             loginInput.style.borderColor = "red";
             alert("Будь ласка, введіть логін.");
@@ -68,4 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
         loginInput.value = "";
         passwordInput.value = "";
     }
+
+    renderCards();
+
 });
