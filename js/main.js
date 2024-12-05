@@ -9,6 +9,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordInput = document.getElementById("password");
     const userNameSpan = document.querySelector(".user-name");
     const cardsContainer = document.querySelector(".cards-restaurants");
+    
+    
+    const promoSwiper = new Swiper('.promo-swiper', {
+        loop: true,
+        effect: 'cube',
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination'
+        },
+    });
+
 
     const restaurants = [
         {
