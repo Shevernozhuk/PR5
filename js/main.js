@@ -9,8 +9,71 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordInput = document.getElementById("password");
     const userNameSpan = document.querySelector(".user-name");
     const cardsContainer = document.querySelector(".cards-restaurants");
+
+    const getData = async function (url) {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Помилка за адресою ${url},
+            статус помилки ${response.status}`);
+        }
+        return await response.json();
+    };
+
+    getData('./db/partners.json').then(function(data){
+        data.forEach(createCardRestaurent);
+    });
+
+    function createCardRestaurent({
+        image, 
+        kitchen, 
+        name, price, 
+        products, 
+        stars, 
+        time_of_delivery: timeOfDelivery
+    }) {
     
+        const card = document.createElement('a');
+        card.classList.add('card', 'card-restaurant');
+        card.href = "#";
+        card.dataset.products = products;
     
+        card.innerHTML = `
+            <img src="${image}" alt="${name}" class="card-image" />
+            <div class="card-text">
+                <div class="card-heading">
+                    <h3 class="card-title">${name}</h3>
+                    <span class="card-tag tag">${timeOfDelivery} хв</span>
+                </div>
+                <div class="card-info">
+                    <div class="rating">${stars}</div>
+                    <div class="price">Від ${price} грн</div>
+                    <div class="category">${kitchen}</div>
+                </div>
+            </div>
+        `;
+    
+        card.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (!localStorage.getItem('login')) {
+                modalAuth.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            } else {
+                localStorage.setItem('selectedRestaurant', JSON.stringify({
+                    image,
+                    kitchen,
+                    name,
+                    price,
+                    products,
+                    stars,
+                    timeOfDelivery
+                }));
+                window.location.href = "restaurant.html";
+            }
+        });
+    
+        cardsContainer.appendChild(card);
+    }
+
     const promoSwiper = new Swiper('.promo-swiper', {
         loop: true,
         effect: 'cube',
@@ -21,92 +84,11 @@ document.addEventListener("DOMContentLoaded", function () {
         pagination: {
             el: '.swiper-pagination'
         },
+        cubeEffect: {
+            shadow: false,
+            slideShadows: false,
+          },
     });
-
-
-    const restaurants = [
-        {
-            title: "Піца плюс",
-            image: "img/pizza-plus/preview.jpg",
-            tag: "50 хвилин",
-            rating: 4.5,
-            price: "від 200 ₴",
-            category: "Піца",
-        },
-        {
-            title: "Танукі",
-            image: "img/food-band/preview.jpg",
-            tag: "60 хвилин",
-            rating: 4.8,
-            price: "від 300 ₴",
-            category: "Суші, роли",
-        },
-        {
-            title: "FoodBand",
-            image: "img/tanuki/preview.jpg",
-            tag: "40 хвилин",
-            rating: 4.5,
-            price: "від 150 ₴",
-            category: "Піца",
-        },
-        {
-            title: "Ikigai",
-            image: "img/palki-skalki/preview.jpg",
-            tag: "55 хвилин",
-            rating: 4.5,
-            price: "від 250 ₴",
-            category: "Піцца",
-        },
-        {
-            title: "Пузата хата",
-            image: "img/gusi-lebedi/preview.jpg",
-            tag: "75 хвилин",
-            rating: 4.5,
-            price: "від 300 ₴",
-            category: "Українські страви",
-        },
-        {
-            title: "PizzaBurger",
-            image: "img/pizza-burger/preview.jpg",
-            tag: "45 хвилин",
-            rating: 4.5,
-            price: "від 700 ₴",
-            category: "Піца",
-        },
-    ];
-
-    function renderCards() {
-        cardsContainer.innerHTML = ""; // Очистити контейнер
-        restaurants.forEach((restaurant) => {
-            const card = document.createElement("a");
-            card.classList.add("card", "card-restaurant");
-            card.href = "#";
-            card.innerHTML = `
-                <img src="${restaurant.image}" alt="image" class="card-image" />
-                <div class="card-text">
-                    <div class="card-heading">
-                        <h3 class="card-title">${restaurant.title}</h3>
-                        <span class="card-tag tag">${restaurant.tag}</span>
-                    </div>
-                    <div class="card-info">
-                        <div class="rating">${restaurant.rating}</div>
-                        <div class="price">${restaurant.price}</div>
-                        <div class="category">${restaurant.category}</div>
-                    </div>
-                </div>
-            `;
-            card.addEventListener("click", (event) => {
-                event.preventDefault();
-                if (!localStorage.getItem("login")) {
-                    modalAuth.style.display = "flex";
-                    document.body.style.overflow = "hidden";
-                } else {
-                    window.location.href = "restaurant.html";
-                }
-            });
-            cardsContainer.appendChild(card);
-        });
-    }
 
     authButton.addEventListener("click", () => {
         modalAuth.style.display = "flex";
@@ -168,7 +150,4 @@ document.addEventListener("DOMContentLoaded", function () {
         loginInput.value = "";
         passwordInput.value = "";
     }
-
-    renderCards();
-
 });
