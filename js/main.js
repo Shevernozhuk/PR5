@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordInput = document.getElementById("password");
     const userNameSpan = document.querySelector(".user-name");
     const cardsContainer = document.querySelector(".cards-restaurants");
+    const searchInput = document.querySelector('.input-search');
+    const menuContainer = document.querySelector('.cards-restaurants');
 
     const getData = async function (url) {
         const response = await fetch(url);
@@ -22,6 +24,85 @@ document.addEventListener("DOMContentLoaded", function () {
     getData('./db/partners.json').then(function(data){
         data.forEach(createCardRestaurent);
     });
+
+
+
+    searchInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            const query = searchInput.value.trim().toLowerCase();
+            if (!query) {
+                searchInput.style.borderColor = 'red';
+                setTimeout(() => {
+                    searchInput.style.borderColor = '';
+                }, 1500);
+                return;
+            }
+
+            getData(`./db/partners.json`).then(function(menuItems) {
+                const filteredItems = menuItems.filter(item => item.name.toLowerCase().includes(query));
+
+                menuContainer.innerHTML = "";
+                if (filteredItems.length > 0) {
+                    filteredItems.forEach((item) => {
+                        const { 
+                            image, 
+                            kitchen, 
+                            name, 
+                            price,
+                            products,
+                            stars, 
+                            time_of_delivery: timeOfDelivery
+                            } = item;
+
+                            const card = document.createElement('a');
+                            card.classList.add('card', 'card-restaurant');
+                            card.href = "#";
+                            card.dataset.products = products;
+
+                        card.innerHTML = `
+                            <img src="${image}" alt="${name}" class="card-image" />
+                            <div class="card-text">
+                                <div class="card-heading">
+                                    <h3 class="card-title">${name}</h3>
+                                    <span class="card-tag tag">${timeOfDelivery} хв</span>
+                                </div>
+                                <div class="card-info">
+                                    <div class="rating">${stars}</div>
+                                    <div class="price">Від ${price} грн</div>
+                                    <div class="category">${kitchen}</div>
+                                </div>
+                            </div>
+                        `;
+
+                        card.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            if (!localStorage.getItem('login')) {
+                                modalAuth.style.display = 'flex';
+                                document.body.style.overflow = 'hidden';
+                            } else {
+                                localStorage.setItem('selectedRestaurant', JSON.stringify({
+                                    image,
+                                    kitchen,
+                                    name,
+                                    price,
+                                    products,
+                                    stars,
+                                    timeOfDelivery
+                                }));
+                                window.location.href = "restaurant.html";
+                            }
+                        });
+
+                        menuContainer.appendChild(card);
+                    });
+                } else {
+                    menuContainer.innerHTML = '<p class="no-results">Результати не знайдено</p>';
+                }
+            });
+        }
+    });
+
+
 
     function createCardRestaurent({
         image, 
