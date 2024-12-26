@@ -808,6 +808,7 @@ button {
         background-repeat: no-repeat;
         -webkit-mask-size: 20px;
         mask-size: 20px;
+        border: 10px solid white;
     }
 
     .promo {

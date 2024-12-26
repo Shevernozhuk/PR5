@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         menuContainer.appendChild(card);
                     });
                 } else {
-                    menuContainer.innerHTML = '<p class="no-results">Результати не знайдено</p>';
+                    menuContainer.innerHTML = '<p>Результати не знайдено</p>';
                 }
             });
         }

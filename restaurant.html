@@ -20,6 +20,7 @@
 				<input type="text" class="input input-address" placeholder="Адреса доставки" />
 			</label>
 			<div class="buttons">
+				<span class="user-name"></span>
 				<button class="button button-primary button-auth">
 					<span class="button-auth-svg"></span>
 					<span class="button-text">Війти</span>
@@ -27,6 +28,10 @@
 				<button class="button" id="cart-button">
 					<span class="button-cart-svg"></span>
 					<span class="button-text">Кошик</span>
+				</button>
+				<button class="button button-primary button-out">
+					<span class="button-text">Вийти</span>
+					<span class="button-out-svg"></span>
 				</button>
 			</div>
 		</header>
@@ -37,165 +42,9 @@
 		<div class="container">
 			<section class="menu">
 				<div class="section-heading">
-					<!-- <h2 class="section-title restaurant-title">Піца Плюс</h2>
-					<div class="card-info">
-						<div class="rating">
-							4.5
-						</div>
-						<div class="price">От 300 ₴</div>
-						<div class="category">Піца</div>
-					</div> -->
 				</div>
 				<div class="cards cards-menu">
-					<div class="card">
-						<img src="img/pizza-plus/pizza-vesuvius.jpg" alt="image" class="card-image" />
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Піца Везувій</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатний, сир «Моцарелла», шинка, пепероні, перець
-									«Халапіння», соус «Тобаско», томати.
-								</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">У кошик</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">545 ₴</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
-
-					<div class="card">
-						<img src="img/pizza-plus/pizza-girls.jpg" alt="image" class="card-image" />
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Піца BBQ</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатний, пісне тісто, нежирний сир, кукурудза, цибуля,
-									маслини,
-									гриби, помідори, болгарський перець
-								</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">У кошик</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">150 ₴</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
-
-					<div class="card">
-						<img src="img/pizza-plus/pizza-oleole.jpg" alt="image" class="card-image" />
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Піца Оле-Оле</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатний, сир «Моцарелла», черрі, маслини, зелень, майонез
-								</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">У кошик</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">440 ₴</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
-
-					<div class="card">
-						<img src="img/pizza-plus/pizza-plus.jpg" alt="image" class="card-image" />
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Піца Плюс</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатний, сир «Моцарелла», сир «Чеддер», томат,
-									пепероні,
-									телятина, гриби, бекон, болгарський перець.
-								</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">У кошик</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">405 ₴</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
-
-					<div class="card">
-						<img src="img/pizza-plus/pizza-hawaiian.jpg" alt="image" class="card-image" />
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Піца Гавайська</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатний, сир «Моцарелла», шинка, ананаси</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">У кошик</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">340 ₴</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
-
-					<div class="card">
-						<img src="img/pizza-plus/pizza-classic.jpg" alt="image" class="card-image" />
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Піца Класика</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатний, сир «Моцарелла», сир «Пармезан», шинка,
-									салямі,
-									гриби.
-								</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">У кошик</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">310 ₴</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
+					
 				</div>
 				<!-- /.cards -->
 			</section>
@@ -231,58 +80,15 @@
 			</div>
 			<!-- /.modal-header -->
 			<div class="modal-body">
-				<div class="food-row">
-					<span class="food-name">Рол вугор стандарт</span>
-					<strong class="food-price">250 ₴</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
-				<div class="food-row">
-					<span class="food-name">Рол вугор стандарт</span>
-					<strong class="food-price">250 ₴</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
-				<div class="food-row">
-					<span class="food-name">Рол вугор стандарт</span>
-					<strong class="food-price">250 ₴</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
-				<div class="food-row">
-					<span class="food-name">Рол вугор стандарт</span>
-					<strong class="food-price">250 ₴</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
 			</div>
-			<!-- /.modal-body -->
 			<div class="modal-footer">
-				<span class="modal-pricetag">1250 ₴</span>
+				<span class="modal-pricetag">0 ₴</span>
 				<div class="footer-buttons">
 					<button class="button button-primary">Оформити замовлення</button>
 					<button class="button clear-cart">Скасувати</button>
 				</div>
 			</div>
-			<!-- /.modal-footer -->
 		</div>
-		<!-- /.modal-dialog -->
 	</div>
 
 	<div class="modal-auth">
