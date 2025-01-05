@@ -1,3 +1,6 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+
 function renderRestaurantInfo() {
     const restaurantInfo = JSON.parse(localStorage.getItem('selectedRestaurant'));
     if (restaurantInfo) {
@@ -152,6 +155,18 @@ function updateCartIcon() {
     cartIcon.textContent = totalItems > 0 ? totalItems : '';
 }
 
+function saveOrderToDatabase(order) {
+    const db = getDatabase(); 
+    const ordersRef = ref(db, 'orders'); 
+
+    return push(ordersRef, order)
+        .then(() => {
+            console.log('Замовлення збережено');
+        })
+        .catch((error) => {
+            console.error('Помилка при збереженні замовлення:', error);
+        });
+}    
 
 document.addEventListener('DOMContentLoaded', () => {
     renderRestaurantInfo();
@@ -173,6 +188,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearCartButton = cartModal.querySelector('.clear-cart');
     const orderCartButton = cartModal.querySelector('.button-primary');
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyCuBDGegmpb6ekWRsaXeZQbkPamZCaeeTo",
+        authDomain: "deliveryfood-500e6.firebaseapp.com",
+        databaseURL: "https://deliveryfood-500e6-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "deliveryfood-500e6",
+        storageBucket: "deliveryfood-500e6.firebasestorage.app",
+        messagingSenderId: "363352332686",
+        appId: "1:363352332686:web:d9d64ed7a659ff9cfb2cdf"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+
+    const db = getDatabase(app);
+
     openCartButton.addEventListener('click', () => {
         cartModal.style.display = 'block';
         renderCart();
@@ -185,9 +214,35 @@ document.addEventListener('DOMContentLoaded', () => {
     clearCartButton.addEventListener('click', clearCart);
 
     orderCartButton.addEventListener('click', () => {
-        cartModal.style.display = 'none';
-        clearCart();
-        alert('Замовлення оформлено!');
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const userName = localStorage.getItem('login');
+        const restaurantInfo = JSON.parse(localStorage.getItem('selectedRestaurant'));
+
+        const phoneNumber = prompt('Введіть ваш номер телефону:');
+        if (!phoneNumber) {
+            alert('Номер телефону обов’язковий для оформлення замовлення!');
+            return;
+        }
+
+        const order = {
+            user: userName,
+            phone: phoneNumber,
+            restaurant: restaurantInfo ? restaurantInfo.name : 'Не вказано',
+            items: cart,
+            totalAmount: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+            orderDate: new Date().toISOString(),
+        };
+
+        saveOrderToDatabase(order)
+            .then(() => {
+                alert('Замовлення оформлено!');
+                clearCart();
+                cartModal.style.display = 'none';
+            })
+            .catch((error) => {
+                console.error('Помилка збереження замовлення:', error);
+                alert('Не вдалося оформити замовлення. Спробуйте пізніше.');
+            });;
     });
 
     authButton.addEventListener("click", () => {
